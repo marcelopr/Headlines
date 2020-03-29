@@ -14,7 +14,7 @@ class ArticleItem extends StatelessWidget {
     return InkWell(
       onTap: () => _launchURL(context),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 24.0),
         child: IntrinsicHeight(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,

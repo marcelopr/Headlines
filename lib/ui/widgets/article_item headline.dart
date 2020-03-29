@@ -11,8 +11,6 @@ class ArticleItemHeadLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Color> _colors = [Colors.black, Colors.transparent];
-    List<double> _stops = [0, 1];
     return Padding(
       padding: const EdgeInsets.only(
         left: 12.0,
@@ -27,23 +25,23 @@ class ArticleItemHeadLine extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(6.0),
                 child: CachedNetworkImage(
-                  height: 220.0,
+                  height: 240.0,
                   width: double.infinity,
                   fit: BoxFit.cover,
                   imageUrl: _article.urlToImage,
                   placeholder: (context, url) =>
-                      new Skeleton(height: 220.0, width: double.infinity),
+                      new Skeleton(height: 240.0, width: double.infinity),
                   errorWidget: (context, url, error) => Container(
                       child: Center(child: Icon(Icons.image, size: 50)),
-                      height: 220.0),
+                      height: 240.0),
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(12.0),
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: _colors,
-                      stops: _stops,
+                      colors: [Colors.black, Colors.transparent],
+                      stops: [0, 1],
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
                     ),
@@ -53,7 +51,7 @@ class ArticleItemHeadLine extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(height: 120.0),
+                    SizedBox(height: 100.0),
                     Text(
                       _article.title,
                       style: TextStyle(
