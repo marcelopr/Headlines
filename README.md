@@ -1,6 +1,6 @@
-# newsapp
+# Headlines
 
-A new Flutter project.
+Aplicativo de notícias desenvolvido com Flutter.
 
 ## Getting Started
 
