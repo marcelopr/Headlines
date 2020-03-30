@@ -4,23 +4,50 @@ import 'package:newsapp/ui/widgets/article_item%20headline.dart';
 import 'package:newsapp/ui/widgets/article_item.dart';
 import 'package:provider/provider.dart';
 
-class ArticlesList extends StatelessWidget {
+class ArticlesList extends StatefulWidget {
+  @override
+  _ArticlesListState createState() => _ArticlesListState();
+}
+
+class _ArticlesListState extends State<ArticlesList>
+    with SingleTickerProviderStateMixin {
+  AnimationController _slideCcontroller;
+  Animation<Offset> offset;
+
+  @override
+  void initState() {
+    super.initState();
+    _slideCcontroller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    offset = Tween<Offset>(begin: Offset(0.0, 7.0), end: Offset.zero).animate(
+        CurvedAnimation(
+            parent: _slideCcontroller, curve: Curves.fastLinearToSlowEaseIn));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<NewsState>(builder: (context, newsState, child) {
-      if (!newsState.isLoading && newsState.articles.isEmpty) {
-        return Expanded(
-          child: Center(
-            child: Text(
-              'Nenhum resultado encontrado.',
-              style: TextStyle(fontFamily: 'Muli'),
-            ),
+    final newsState = Provider.of<NewsState>(context);
+
+    if (newsState.isLoading) {
+      return Expanded(child: Center(child: CircularProgressIndicator()));
+    } else if (!newsState.isLoading && newsState.articles.isEmpty) {
+      return Expanded(
+        child: Center(
+          child: Text(
+            'Nenhum resultado encontrado.',
+            style: TextStyle(fontFamily: 'Muli'),
           ),
-        );
-      } else {
-        return Expanded(
-          child: Visibility(
-            visible: !newsState.isLoading,
+        ),
+      );
+    } else {
+      _slideCcontroller.reset();
+      _slideCcontroller.forward();
+
+      return Expanded(
+        child: FadeTransition(
+          opacity: _slideCcontroller,
+          child: SlideTransition(
+            position: offset,
             child: RefreshIndicator(
               onRefresh: () async {
                 return newsState.refreshList();
@@ -40,10 +67,9 @@ class ArticlesList extends StatelessWidget {
                 },
               ),
             ),
-            replacement: Center(child: CircularProgressIndicator()),
           ),
-        );
-      }
-    });
+        ),
+      );
+    }
   }
 }
