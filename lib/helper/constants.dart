@@ -1,6 +1,6 @@
 import 'package:newsapp/models/category_model.dart';
 
-const String newsApiKey = '10f74b4c72b74b2587c68a636523c215';
+const String newsApiKey = 'SUA NEWS API KEY';
 
 List<CategoryModel> getCategories() {
   List<CategoryModel> categories = List<CategoryModel>();
