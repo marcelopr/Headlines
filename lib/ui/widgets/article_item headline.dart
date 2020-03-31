@@ -27,7 +27,7 @@ class ArticleItemHeadLine extends StatelessWidget {
                 child: CachedNetworkImage(
                   height: 240.0,
                   width: double.infinity,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitHeight,
                   imageUrl: _article.urlToImage,
                   placeholder: (context, url) =>
                       new Skeleton(height: 240.0, width: double.infinity),
@@ -51,7 +51,7 @@ class ArticleItemHeadLine extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(height: 100.0),
+                    SizedBox(height: 50.0),
                     Text(
                       _article.title,
                       style: TextStyle(
