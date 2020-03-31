@@ -16,7 +16,7 @@ class NewsState extends ChangeNotifier {
     print('getNews for $_category');
     _articles.clear();
     loading = true;
-    this._articles = await _news.getNews(_category);
+    this._articles = await _news.getNews(_category, null);
     loading = false;
     print('getNews for $_category DONE');
   }

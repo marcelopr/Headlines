@@ -55,10 +55,10 @@ class ArticleItemHeadLine extends StatelessWidget {
                     Text(
                       _article.title,
                       style: TextStyle(
-                          fontFamily: 'Garamond',
-                          fontSize: 21.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w900),
+                        fontFamily: 'BreeSerif',
+                        fontSize: 21.0,
+                        color: Colors.white,
+                      ),
                     ),
                     SizedBox(height: 8.0),
                     Text(
@@ -66,7 +66,7 @@ class ArticleItemHeadLine extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.white70,
                           fontSize: 12.0,
-                          fontWeight: FontWeight.bold),
+                          fontFamily: 'BreeSerif'),
                     )
                   ],
                 ),

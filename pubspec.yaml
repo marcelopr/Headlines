@@ -51,13 +51,14 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Garamond
-      fonts:
-        - asset: lib/assets/fonts/CormorantGaramond-Medium.ttf
 
     - family: Ancient
       fonts:
         - asset: lib/assets/fonts/Ancient-Medium.ttf
+
+    - family: BreeSerif
+      fonts:
+        - asset: lib/assets/fonts/BreeSerif-Regular.ttf
         
     - family: Muli
       fonts:

@@ -16,38 +16,60 @@ class ArticleItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 24.0),
         child: IntrinsicHeight(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(6.0),
-                child: CachedNetworkImage(
-                  width: 90.0,
-                  fit: BoxFit.fitHeight,
-                  imageUrl: _article.urlToImage,
-                  placeholder: (context, url) => Skeleton(width: 90),
-                  errorWidget: (context, url, error) => Container(
-                      child: Center(child: Icon(Icons.image)), width: 90.0),
-                ),
-              ),
-              SizedBox(width: 12.0),
-
-              ///Expanded para softwrap no Text()
-              Expanded(
-                child: Column(
+              Flexible(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Text(
-                      _article.title,
-                      style: TextStyle(
-                        fontSize: 17.0,
-                        fontFamily: 'Garamond',
-                        fontWeight: FontWeight.w700,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(6.0),
+                      child: CachedNetworkImage(
+                        width: 90.0,
+                        fit: BoxFit.fitHeight,
+                        imageUrl: _article.urlToImage,
+                        placeholder: (context, url) => Skeleton(width: 90),
+                        errorWidget: (context, url, error) => Container(
+                            child: Center(child: Icon(Icons.image)),
+                            width: 90.0),
+                      ),
+                    ),
+                    SizedBox(width: 12.0),
+
+                    ///Expanded para softwrap no Text()
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            _article.title,
+                            style: TextStyle(
+                              fontSize: 17.0,
+                              fontFamily: 'BreeSerif',
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
+                ),
+              ),
+              SizedBox(height: 12.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: Opacity(
+                  opacity: 0.5,
+                  child: Text(
+                    _article.description,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 13.0,
+                      fontFamily: 'BreeSerif',
+                    ),
+                  ),
                 ),
               ),
             ],
