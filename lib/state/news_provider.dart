@@ -1,44 +1,45 @@
 import 'package:flutter/cupertino.dart';
-import 'package:newsapp/helper/news.dart';
+import 'package:newsapp/repositories/news.dart';
 import 'package:newsapp/models/article_model.dart';
 
 class NewsState extends ChangeNotifier {
   bool isLoading = true;
   List<Article> _articles = [];
   String _category = 'general';
+  int _page = 1;
   News _news = News();
 
   NewsState() {
-    _getNews();
+    getTopArticles('general');
   }
 
-  _getNews() async {
-    print('getNews for $_category');
-    _articles.clear();
-    loading = true;
-    this._articles = await _news.getNews(_category, null);
-    loading = false;
-    print('getNews for $_category DONE');
-  }
-
-  List<Article> get articles {
-    return _articles;
-  }
+  List<Article> get articlesList => _articles;
 
   String get selectedCategory => _category;
+
+  int get currentPage => _page;
 
   set loading(bool value) {
     isLoading = value;
     notifyListeners();
   }
 
-  set updateCategory(String category) {
-    _category = category;
+  loadMoreArticles() async {
+    _page++;
+    this._articles = _articles + await _news.getNews(_category, _page, null);
     notifyListeners();
-    _getNews();
+  }
+
+  getTopArticles(String category) async {
+    _page = 1;
+    _category = category;
+    _articles.clear();
+    loading = true;
+    this._articles = _articles + await _news.getNews(_category, _page, null);
+    loading = false;
   }
 
   refreshList() {
-    _getNews();
+    getTopArticles(_category);
   }
 }
