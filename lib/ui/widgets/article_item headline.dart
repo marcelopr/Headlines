@@ -27,7 +27,7 @@ class ArticleItemHeadLine extends StatelessWidget {
                 child: CachedNetworkImage(
                   height: 240.0,
                   width: double.infinity,
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.cover,
                   imageUrl: _article.urlToImage,
                   placeholder: (context, url) =>
                       new Skeleton(height: 240.0, width: double.infinity),
