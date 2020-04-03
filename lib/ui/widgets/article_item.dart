@@ -58,16 +58,19 @@ class ArticleItem extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 12.0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Opacity(
-                  opacity: 0.5,
-                  child: Text(
-                    _article.description,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontSize: 13.0,
-                      fontFamily: 'BreeSerif',
+              Visibility(
+                visible: _article.description.isNotEmpty,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: Opacity(
+                    opacity: 0.5,
+                    child: Text(
+                      _article.description,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: 13.0,
+                        fontFamily: 'BreeSerif',
+                      ),
                     ),
                   ),
                 ),
