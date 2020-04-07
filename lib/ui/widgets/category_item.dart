@@ -16,7 +16,7 @@ class CategoryItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: GestureDetector(
-        onTap: () => newsState.getTopArticles(_category.categoryName),
+        onTap: () => newsState.getTopArticles(_category.categoryName, null),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,

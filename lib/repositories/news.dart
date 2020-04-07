@@ -9,7 +9,7 @@ class News {
     List<Article> news = [];
     String url = keyWords == null
         ? 'https://newsapi.org/v2/top-headlines?pageSize=15&page=$page&category=$category&country=br&apiKey=$newsApiKey'
-        : 'https://newsapi.org/v2/top-headlines?q=$keyWords&pageSize=20&category=$category&country=br&apiKey=$newsApiKey';
+        : 'https://newsapi.org/v2/top-headlines?q=$keyWords&pageSize=20&page=$page&country=br&apiKey=$newsApiKey';
 
     var response = await http.get(url);
     var jsonData = jsonDecode(response.body);

@@ -31,7 +31,7 @@ class _ArticlesListState extends State<ArticlesList>
     return Consumer<NewsState>(
       builder: (context, newsState, child) {
         ///Reiniciar animação quando page for 1, e para-lá se n for.
-        if (newsState.currentPage == 1) {
+        if (newsState.currentPage == 1 && !newsState.isSearch) {
           _slideCcontroller.reset();
           _slideCcontroller.forward();
         } else {
@@ -45,55 +45,6 @@ class _ArticlesListState extends State<ArticlesList>
             child: _buildListResult(newsState, context),
           ),
         );
-        /*
-        if (newsState.isLoading) {
-          return Expanded(child: Center(child: CircularProgressIndicator()));
-        } else if (!newsState.isLoading && newsState.articlesList.isEmpty) {
-          return Expanded(
-            child: Center(
-              child: Text(
-                'Nenhum resultado encontrado.',
-                style: TextStyle(fontFamily: 'Muli'),
-              ),
-            ),
-          );
-        } else {
-          return Expanded(
-            child: FadeTransition(
-              opacity: _slideCcontroller,
-              child: SlideTransition(
-                position: offset,
-                child: NotificationListener<ScrollNotification>(
-                  onNotification: (notification) {
-                    if (loadingMore == true)
-                      _onScrollNotification(notification, newsState);
-                  },
-                  child: RefreshIndicator(
-                    onRefresh: () async {
-                      return newsState.refreshList();
-                    },
-                    child: ListView.separated(
-                      separatorBuilder: (_, i) => Divider(
-                        height: 0.0,
-                      ),
-                      itemCount: newsState.articlesList.length,
-                      shrinkWrap: true,
-                      controller: _scrollController,
-                      physics: ClampingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        final article = newsState.articlesList[index];
-
-                        return index == 0
-                            ? ArticleItemHeadLine(article: article)
-                            : ArticleItem(article: article);
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
-        }*/
       },
     );
   }
