@@ -5,6 +5,7 @@ import 'package:newsapp/models/article_model.dart';
 class NewsState extends ChangeNotifier {
   bool isLoading = true;
   bool _isSearch = false;
+  bool _allLoaded = false;
   List<Article> _articles = [];
   String _category = 'general';
   int _page = 1;
@@ -22,6 +23,8 @@ class NewsState extends ChangeNotifier {
 
   bool get isSearch => _isSearch;
 
+  bool get isAllLoaded => _allLoaded;
+
   setSearchTo(bool value) {
     _isSearch = value;
     notifyListeners();
@@ -32,20 +35,34 @@ class NewsState extends ChangeNotifier {
     notifyListeners();
   }
 
-  loadMoreArticles() async {
-    _page++;
-    this._articles = _articles + await _news.getNews(_category, _page, null);
+  set _setAllLoadedTo(bool value) {
+    _allLoaded = value;
     notifyListeners();
   }
 
+  loadMoreArticles() async {
+    _page++;
+    final news = await _news.getNews(_category, _page, null);
+    if (news.isEmpty) {
+      _setAllLoadedTo = true;
+    } else {
+      _articles += news;
+      notifyListeners();
+    }
+  }
+
   getTopArticles(String category, String keywords) async {
-    print('GET TOP ARTICLES');
     _page = 1;
     _category = category;
     _articles.clear();
+    _allLoaded = false;
     loading = true;
-    this._articles =
-        _articles + await _news.getNews(_category, _page, keywords);
+    final news = await _news.getNews(_category, _page, keywords);
+    if (news.isEmpty) {
+      _setAllLoadedTo = true;
+    } else {
+      _articles += news;
+    }
     loading = false;
   }
 

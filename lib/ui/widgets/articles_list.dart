@@ -67,7 +67,7 @@ class _ArticlesListState extends State<ArticlesList>
                 position: _offset,
                 child: NotificationListener<ScrollNotification>(
                   onNotification: (notification) {
-                    if (_loadingMore == false)
+                    if (_loadingMore == false && !newsState.isAllLoaded)
                       _onScrollNotification(notification, newsState);
                   },
                   child: RefreshIndicator(
