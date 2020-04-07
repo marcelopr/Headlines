@@ -29,6 +29,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
               newsState.getTopArticles(newsState.selectedCategory, null);
             }
             newsState.setSearchTo(false);
+            setState(() => _didSearch = false);
           },
         ),
         title: TextFormField(
@@ -83,7 +84,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
             },
           ),
           PopupMenuButton<int>(
-            icon: Icon(Icons.menu),
+            icon: Icon(Icons.more_vert),
             tooltip: 'Configurações',
             itemBuilder: (context) => [
               PopupMenuItem(
