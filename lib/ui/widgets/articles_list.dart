@@ -29,8 +29,9 @@ class _ArticlesListState extends State<ArticlesList>
 
   @override
   Widget build(BuildContext context) {
+    /// > 600 = Tablet. Setando 700, pois 600 se adequa melhor ao layout de phone.
     final double shortestSide = MediaQuery.of(context).size.shortestSide;
-    final bool isPhoneLayout = shortestSide < 600;
+    final bool isPhoneLayout = shortestSide < 700;
 
     return Consumer<NewsState>(
       builder: (context, newsState, child) {

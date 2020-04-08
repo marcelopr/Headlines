@@ -11,6 +11,7 @@ class ArticleItemTablet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.width);
     return InkWell(
       onTap: () => _launchURL(context),
       child: Column(
@@ -55,7 +56,9 @@ class ArticleItemTablet extends StatelessWidget {
                       child: Text(
                         _article.description,
                         textAlign: TextAlign.start,
+                        maxLines: 3,
                         softWrap: true,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 16.0,
                           fontFamily: 'BreeSerif',
