@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newsapp/state/news_provider.dart';
 import 'package:newsapp/ui/widgets/article_item%20headline.dart';
 import 'package:newsapp/ui/widgets/article_item.dart';
+import 'package:newsapp/ui/widgets/article_item_tablet.dart';
 import 'package:provider/provider.dart';
 
 class ArticlesList extends StatefulWidget {
@@ -28,6 +29,9 @@ class _ArticlesListState extends State<ArticlesList>
 
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isPhoneLayout = shortestSide < 600;
+
     return Consumer<NewsState>(
       builder: (context, newsState, child) {
         ///Reiniciar animação quando page for 1, e para-lá se n for.
@@ -42,14 +46,15 @@ class _ArticlesListState extends State<ArticlesList>
           child: Visibility(
             visible: !newsState.isLoading,
             replacement: Center(child: CircularProgressIndicator()),
-            child: _buildListResult(newsState, context),
+            child: _buildListResult(newsState, context, isPhoneLayout),
           ),
         );
       },
     );
   }
 
-  Widget _buildListResult(NewsState newsState, BuildContext context) {
+  Widget _buildListResult(
+      NewsState newsState, BuildContext context, bool isPhoneLayout) {
     return Visibility(
       visible: newsState.articlesList.isNotEmpty,
       replacement: Center(
@@ -74,22 +79,9 @@ class _ArticlesListState extends State<ArticlesList>
                     onRefresh: () async {
                       return newsState.refreshList();
                     },
-                    child: ListView.separated(
-                      separatorBuilder: (_, i) => Divider(
-                        height: 0.0,
-                      ),
-                      itemCount: newsState.articlesList.length,
-                      shrinkWrap: true,
-                      controller: _scrollController,
-                      physics: ClampingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        final article = newsState.articlesList[index];
-
-                        return index == 0
-                            ? ArticleItemHeadLine(article: article)
-                            : ArticleItem(article: article);
-                      },
-                    ),
+                    child: isPhoneLayout
+                        ? _buildPhoneList(newsState)
+                        : _buildTabletList(newsState),
                   ),
                 ),
               ),
@@ -98,6 +90,42 @@ class _ArticlesListState extends State<ArticlesList>
           if (_loadingMore) ...[LinearProgressIndicator()]
         ],
       ),
+    );
+  }
+
+  ListView _buildPhoneList(NewsState newsState) {
+    return ListView.separated(
+      separatorBuilder: (_, i) => Divider(
+        height: 0.0,
+      ),
+      itemCount: newsState.articlesList.length,
+      shrinkWrap: true,
+      controller: _scrollController,
+      physics: ClampingScrollPhysics(),
+      itemBuilder: (context, index) {
+        final article = newsState.articlesList[index];
+
+        return index == 0
+            ? ArticleItemHeadLine(article: article)
+            : ArticleItem(article: article);
+      },
+    );
+  }
+
+  GridView _buildTabletList(NewsState newsState) {
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 16.0,
+          crossAxisSpacing: 32.0,
+          childAspectRatio: 0.9),
+      itemBuilder: (_, index) {
+        final article = newsState.articlesList[index];
+        return ArticleItemTablet(article: article);
+      },
+      controller: _scrollController,
+      itemCount: newsState.articlesList.length,
+      padding: EdgeInsets.symmetric(horizontal: 32.0),
     );
   }
 
